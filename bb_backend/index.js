@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
-import donorRoutes from './routes/donorRoutes.js'; // ✅ Step 1: Import donor routes
+import donorRoutes from './routes/donorRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -10,18 +10,25 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ✅ Step 2: CORS Configuration - Allow from environment-defined frontend URL
+// ✅ CORS Configuration - Supports multiple origins (local + deployed)
+const allowedOrigins = [
+  'http://localhost:5173',
+  process.env.FRONTEND_URL
+].filter(Boolean); // filter out undefined
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
 }));
 
-// ✅ Step 3: Middleware to handle JSON request bodies
+// ✅ JSON parsing middleware
 app.use(express.json());
 
-// ✅ Step 4: Use donor routes
+// ✅ Routes
 app.use('/api/donors', donorRoutes);
 
-// ✅ Temporary route to test if server is running
+// ✅ Root test route
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
