@@ -10,23 +10,23 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Step 2: CORS Configuration - Allow requests from the frontend
+// ✅ Step 2: CORS Configuration - Allow from environment-defined frontend URL
 app.use(cors({
-  origin: 'http://localhost:5173', // Vite dev server frontend URL (adjust this as necessary for production)
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
 }));
 
-// Step 3: Middleware to handle JSON request bodies
+// ✅ Step 3: Middleware to handle JSON request bodies
 app.use(express.json());
 
-// Step 4: Use donor routes
-app.use('/api/donors', donorRoutes);  // All donor-related routes will start with /api/donors
+// ✅ Step 4: Use donor routes
+app.use('/api/donors', donorRoutes);
 
-// Temporary route to test if server is running
+// ✅ Temporary route to test if server is running
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
-// Start the server
+// ✅ Start the server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });

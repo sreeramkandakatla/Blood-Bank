@@ -1,16 +1,22 @@
 # Node
 node_modules/
-.env
-npm-debug.log*
+bb_backend/node_modules/
+bb_frontend/node_modules/
 
-# Build output
-frontend/dist/
-backend/dist/
-frontend/.vite/
-backend/.next/
+# Environment variables
+.env
+bb_backend/.env
+bb_frontend/.env  # (in case you add one later)
 
 # Logs
 *.log
+npm-debug.log*
+
+# Build output
+bb_frontend/dist/
+bb_backend/dist/
+bb_frontend/.vite/
+bb_backend/.next/
 
 # OS
 .DS_Store
