@@ -6,8 +6,24 @@ import jwt from 'jsonwebtoken';
 export const signupDonor = async (req, res) => {
   const { name, email, password, bloodGroup, phone, address } = req.body;
 
+  // Basic field check
   if (!name || !email || !password || !bloodGroup || !phone || !address) {
     return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  // Additional Validations
+  const validBloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+
+  if (!/^\d{10}$/.test(phone)) {
+    return res.status(400).json({ message: 'Phone number must be exactly 10 digits' });
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ message: 'Invalid email format' });
+  }
+
+  if (!validBloodGroups.includes(bloodGroup)) {
+    return res.status(400).json({ message: 'Invalid blood group' });
   }
 
   try {
