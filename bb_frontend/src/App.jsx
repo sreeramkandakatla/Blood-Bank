@@ -6,7 +6,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Hospital from './pages/Hospital';
 
-// Import updated Donor pages
+// Donor Pages
 import DonorEntry from './pages/Donor/DonorEntry';
 import DonorSignup from './pages/Donor/DonorSignup';
 import DonorLogin from './pages/Donor/DonorLogin';
@@ -16,12 +16,14 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Layout wraps all routes */}
         <Route path="/" element={<Layout />}>
+          {/* Public Pages */}
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="hospital" element={<Hospital />} />
-          
+
           {/* Donor Routes */}
           <Route path="donor" element={<DonorEntry />} />
           <Route path="donor/signup" element={<DonorSignup />} />

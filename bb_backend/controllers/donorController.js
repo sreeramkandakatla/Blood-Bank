@@ -6,12 +6,10 @@ import jwt from 'jsonwebtoken';
 export const signupDonor = async (req, res) => {
   const { name, email, password, bloodGroup, phone, address } = req.body;
 
-  // Basic field check
   if (!name || !email || !password || !bloodGroup || !phone || !address) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
-  // Additional Validations
   const validBloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
   if (!/^\d{10}$/.test(phone)) {
@@ -92,6 +90,21 @@ export const loginDonor = async (req, res) => {
 
   } catch (error) {
     console.error('Login error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// ✅ NEW: Donor Profile Controller
+export const getDonorProfile = async (req, res) => {
+  try {
+    const donor = await Donor.findById(req.donorId).select('-password');
+    if (!donor) {
+      return res.status(404).json({ message: 'Donor not found' });
+    }
+
+    res.status(200).json(donor);
+  } catch (error) {
+    console.error('Fetch profile error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
